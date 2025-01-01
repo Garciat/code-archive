@@ -1,0 +1,63 @@
+body, h1, h2, p {
+	margin: 0;
+	padding: 0;
+}
+
+body, html{
+	height: 100%;
+}
+
+body {
+	background: #888;
+	background-size: cover;
+	font-family: sans-serif;
+}
+
+h1 {
+	line-height: 70px;
+	color: #FFF;
+	text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+	font-size: 68pt;
+	letter-spacing: -4px;
+}
+h2 {
+	line-height: 50px;
+	color: #333;
+	text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+	font-size: 52pt;
+	letter-spacing: -4px;
+}
+	h2.alt{
+		color: #FFF;
+		text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
+	}
+p {
+	margin: 20px;
+	padding: 10px 15px;
+	-webkit-box-shadow: 2px 2px 0 rgba(0,0,0,1);
+	background: rgba(0,0,0,0.8);
+	color: #FFF;
+	font-size: 24pt;
+	font-weight: bold;
+	letter-spacing: -1px;
+	text-transform: uppercase
+}
+	p.alt {
+		-webkit-box-shadow: 2px 2px 0 rgba(0,0,0,0.6);
+		background: #FFF;
+		color: #222;
+	}
+
+ul {
+	
+}
+	ul li {
+		padding: 4px 0;
+		color: #333;
+		text-shadow: 2px 2px 0 rgba(255,255,255,0.5);
+		font-size: 32pt;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: -3px;
+		list-style-type: none;
+	}

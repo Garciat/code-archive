@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<title>Snake Game</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<style type="text/css">
+body{
+margin: 0;
+background: #000;
+color: #FFF;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+#wrap{
+width: 450px;
+margin: 50px auto;
+}
+
+h1{
+margin: 0;
+font-size: 42pt;
+letter-spacing: -4px;
+}
+
+#canvas{
+margin: 20px auto;
+background: #FFF;
+}
+
+#start,#stats{
+height: 300px;
+margin: -320px 0 0 0;
+padding: 10px;
+color: #000;
+display: none;
+position: relative;
+}
+
+#start{
+font-size: 18pt;
+font-weight: bold;
+text-decoration: underline;
+line-height: 280px;
+text-align: center;
+display: block;
+}
+#start a{
+cursor: pointer;
+}
+
+#stats{
+color: #444;
+}
+
+p{
+margin: 0;
+}
+		</style>
+		<script type="text/javascript">
+var canvas, ctx, moveTimeout, game=false, paused=false, step, dir, pos=new Array(), snake, used, cookie=new Array(), speed, length, score;
+var KEY = { RIGHT:39, UP:38, LEFT:37, DOWN:40, P:80 };
+
+function startGame()
+{
+	canvas = document.getElementById("canvas");
+	if(canvas.getContext)
+	{
+		ctx = canvas.getContext("2d");
+		game=true; step=1; dir=2; pos["x"]=15; pos["y"]=10; snake=new Array(); used=new Array(); length=3; setScore(0); setSpeed(400);
+		
+		document.getElementById("start").style.display = "none";
+		document.getElementById("stats").style.display = "block";
+		
+		for(x=0;x<30;x++)
+		{
+			used[x] = new Array();
+			for(y=0;y<20;y++)
+				used[x][y] = false;
+		}
+		
+		placeCookie(); moveTimeout = setTimeout(move, speed);
+	}
+	else
+		alert("Your browser cannot run this game. Use Firefox, Safari, or Opera.");
+}
+
+function move()
+{
+	for(i=1;i<snake.length;i++) snake[i-1] = snake[i];
+	
+	if(snake[0])
+	{
+		var lastx = snake[0]["x"]; var lasty = snake[0]["y"];
+		ctx.clearRect(lastx*15, lasty*15, 15, 15);
+		used[lastx][lasty] = false;
+	}
+	
+	switch(dir)
+	{
+		case 1: pos["y"]--; break;
+		case 2: pos["x"]++; break;
+		case 3: pos["y"]++; break;
+		case 4: pos["x"]--; break;
+	}
+	
+	var x = pos["x"]; var y = pos["y"];
+	
+	if((dir==1 && pos["y"]<0) || (dir==2 && pos["x"]>29) || (dir==3 && pos["y"]>19) || (dir==4 && pos["x"]<0) || used[x][y])
+		return gameOver();
+	
+	snake[length] = new Array();
+	snake[length]["x"] = pos["x"];
+	snake[length]["y"] = pos["y"];
+	
+	ctx.fillStyle = "#000";
+	ctx.fillRect(x*15, y*15, 15, 15);
+	used[x][y] = true;
+	
+	if(x==cookie["x"] && y==cookie["y"])
+	{
+		placeCookie();
+		setScore(score+Math.round(1000/speed)*100);
+		length++;
+		setSpeed(speed-5);
+	}
+	step = 1;
+	setScore(score+1);
+	moveTimeout = setTimeout(move, speed);
+}
+
+function changeDir(evt)
+{
+	var code = evt.keyCode;
+	if(!game || (paused && code!=KEY.P) || step==0) return;
+	if(code==KEY.UP && dir!=3)
+		dir = 1;
+	else if(code==KEY.RIGHT && dir!=4)
+		dir = 2;
+	else if(code==KEY.DOWN && dir!=1)
+		dir = 3;
+	else if(code==KEY.LEFT && dir!=2)
+		dir = 4;
+	else if(code==KEY.P)
+		pause();
+	else if(code==33)
+		setSpeed(speed-20);
+	else if(code==34)
+		setSpeed(speed+20);
+		
+	if(code!=KEY.P)
+		step = 0;
+}
+
+function placeCookie()
+{
+	while(true)
+	{
+		x = Math.floor(Math.random()*30);
+		y = Math.floor(Math.random()*20);
+		if(!used[x][y] && x!=15 && y!=10) break;
+	}
+	
+	ctx.fillStyle = "#D00";
+	ctx.fillRect(x*15+5, y*15+5, 5, 5);
+	cookie["x"] = x; cookie["y"] = y;
+}
+
+function pause()
+{
+	alert("Game paused.");
+}
+
+function setSpeed(s)
+{
+	if(s<20 || s>400) return;
+	speed = s;
+	document.getElementById("speed").innerHTML = (420-s);
+}
+
+function setScore(s)
+{
+	score = s;
+	document.getElementById("score").innerHTML = s;
+}
+
+function gameOver()
+{
+	clearTimeout(moveTimeout);
+	alert("Game over! Length: "+length);
+	ctx.clearRect(0, 0, 450, 300);
+	document.getElementById("start").style.display = "block";
+	game = false;
+}
+		</script>
+	</head>
+	<body onkeydown="changeDir(event);">
+		<div id="wrap">
+			<h1>Snake</h1>
+			<canvas id="canvas" width="450" height="300">Your browser cannot run this game, try using <a href="http://firefox.com/">Firefox</a>, <a href="http://apple.com/safari/">Safari</a>, or <a href="http://opera.com/">Opera</a>.</canvas>
+			<div id="start"><a onclick="startGame();">Start</a></div>
+			<div id="stats"><b>Score:</b> <span id="score"></span> <b style="margin-left:60px">Speed:</b> <span id="speed"></span> </div>
+			<p>Copyright &copy; 2008 <a href="http://gbrlgrct.com/">Garciat</a></p>
+		</div>
+	</body>
+</html>

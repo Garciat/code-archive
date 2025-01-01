@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>7 Logo in CSS3</title>
+		<style type="text/css">
+/* base = 500px */
+body{
+	background: #222;
+}
+
+.start{
+	margin: 50px auto; /* remove! */
+	width: 34px; /* base */
+	height: 34px; /* base */
+	-webkit-box-shadow: 0 0 3px #FFF;
+	-webkit-border-radius: 17px;  /* base/2 */
+	border: 1px solid #00365d; /* relative */
+	background: #00365d
+		-webkit-gradient(radial, 50% 100%, 0, 50% 100%, 34, /* base */
+			from(#02e7fe),
+			to(rgba(0,0,0,0))
+		);
+}
+	.start .radial{
+		overflow: hidden;
+		width: 100%;
+		height: 100%;
+		-webkit-border-radius: 17px; /* base/2 */
+	}
+	.start .radial>div{
+		height: 50%;
+		-webkit-border-radius: 2px; /* base/20 */
+		background:
+			-webkit-gradient(radial, 49% 100%, 0, 49% 100%, 17, /* base/2 */
+				color-stop(0.9, rgba(255,255,255,0.4)),
+				color-stop(1, rgba(255,255,255,1))
+			);
+	}
+	.start .flag{
+		margin-top: -34px; /* -base */
+		padding: 7px; /* base/5 */
+	}
+	.start .flag>div{
+		float: left;
+		width: 10px;
+		height: 10px;
+		margin: 0;
+		background: red;
+	}
+	.start .flag .r{
+		background: #ba291a
+			-webkit-gradient(radial, 100% 100%, 0, 100% 100%, 10, /* base/2 */
+				color-stop(0, rgba(255,255,255,0.5)),
+				color-stop(1, rgba(255,255,255,0))
+			);
+	}
+	.start .flag .g{
+		background: #31813d
+			-webkit-gradient(radial, 0 100%, 0, 0 100%, 10, /* base/2 */
+				color-stop(0, rgba(255,255,255,0.5)),
+				color-stop(1, rgba(255,255,255,0))
+			);
+	}
+	.start .flag .b{
+		background: #016aad
+			-webkit-gradient(radial, 100% 0, 0, 100% 0, 10, /* base/2 */
+				color-stop(0, rgba(255,255,255,0.5)),
+				color-stop(1, rgba(255,255,255,0))
+			);
+	}
+	.start .flag .y{
+		background: #e8941c
+			-webkit-gradient(radial, 0 0, 0, 0 0, 10, /* base/2 */
+				color-stop(0, rgba(255,255,255,0.5)),
+				color-stop(1, rgba(255,255,255,0))
+			);
+	}
+		</style>
+	</head>
+	<body>
+		<div class="start">
+			<div class="radial">
+				<div>
+					
+				</div>
+			</div>
+			<div class="flag">
+				<div class="r"></div>
+				<div class="g"></div>
+				<div class="b"></div>
+				<div class="y"></div>
+			</div>
+		</div>
+	</body>
+</html>

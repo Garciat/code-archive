@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TwiStar Design</title>
+		<style>
+body,ul,li,p,h1,h2,h3{
+	margin: 0;
+	padding: 0;
+	font-weight: inherit;
+	list-style-type: none;
+}
+
+body{
+	background: #BBB;
+	font-family: Arial,sans-serif;
+}
+
+#left{
+	z-index: 1;
+	position: absolute;
+	top: 0; bottom: 0; left: 0;
+	width: 420px;
+	-webkit-box-shadow: 0 0 30px #000;
+	-moz-box-shadow: 0 0 30px #000;
+	background: #9acd32;
+}
+	#left h1{
+		line-height: 100px;
+		padding: 30px;
+		color: rgba(0,0,0,0.6);
+		font-size: 72pt;
+		font-weight: bold;
+		letter-spacing: -5px;
+	}
+		#left h1 span{
+			color: #FFF;
+		}
+	#left ul{
+		
+	}
+		#left ul a{
+			display: block;
+			padding: 15px 55px;
+			text-shadow: 1px 1px 0 #666;
+			color: #FFF;
+			font-size: 18pt;
+			font-weight: bold;
+			text-decoration: none;
+		}
+		#left ul a:hover{
+			background: rgba(0,0,0,0.6);
+			text-shadow: none;
+		}
+
+.s1{
+	position: absolute;
+	top: 0; bottom: 0; left: 25px;
+	width: 420px;
+	-webkit-box-shadow: 0 0 30px #000;
+	-moz-box-shadow: 0 0 30px #000;
+	background: #333;
+}
+.s2{
+	z-index: -1;
+	position: absolute;
+	top: 0; bottom: 0; left: 60px;
+	width: 420px;
+	-webkit-box-shadow: 0 0 30px #000;
+	-moz-box-shadow: 0 0 30px #000;
+	background: rgba(205,132,50,1);
+}
+.s3{
+	z-index: -2;
+	position: absolute;
+	top: 0; bottom: 0; left: 80px;
+	width: 420px;
+	-webkit-box-shadow: 0 0 30px #000;
+	-moz-box-shadow: 0 0 30px #000;
+	background: #AAA;
+}
+.s4{
+	z-index: -3;
+	position: absolute;
+	top: 0; bottom: 0; left: 105px;
+	width: 720px;
+	padding-top: 30px;
+	padding-left: 430px;
+	-webkit-box-shadow: 0 0 30px #000;
+	-moz-box-shadow: 0 0 30px #000;
+	background: #666;
+	color: #DDD;
+	font-size: 14pt;
+}
+
+#right{
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 520px;
+	padding: 30px;
+	color: #DDD;
+	font-size: 14pt;
+}
+	.slide h1{
+		padding-left: 10px;
+		color: #333;
+		font-size: 42pt;
+		letter-spacing: -4px;
+	}
+	.slide p{
+		margin-bottom: 10px;
+	}
+		</style>
+		<script src="jquery.js"></script>
+		<script>
+
+		</script>
+	</head>
+	<body>
+		<div id="left">
+			<h1>Twi<span>Star</span></h1>
+			<ul>
+				<li><a href="#">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="#">Portfolio</a></li>
+				<li><a href="#">Contact Us</a></li>
+			</ul>
+		</div>
+		<div class="slide s1"></div>
+		<div class="slide s2"></div>
+		<div class="slide s3"></div>
+		<div class="slide s4">
+			<h1>Who are <span style="color:#AAA">we</span>?</h1>
+			<p>TwiStar design is an innovative startup based in Santa Cruz, Bolivia.</p>
+			<p>Our main goal is to...</p>
+		</div>
+	</body>
+</html>

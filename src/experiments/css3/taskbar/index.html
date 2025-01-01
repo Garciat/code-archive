@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Windows 7 Taskbar</title>
+		<style type="text/css">
+@font-face{
+	font-family: segoe;
+	src: local("Segoe UI"), url('segoeui.ttf');
+}
+
+*{
+	cursor: default;
+}
+
+body,p,ul,li{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+html,body{
+	height: 100%;
+	overflow: hidden;
+}
+
+body{
+	font-family: segoe;
+	background: url('street.jpg') center center;
+}
+
+@-webkit-keyframes startButton{
+	from{-webkit-box-shadow: 0 0 5px #FFF;}
+	to{-webkit-box-shadow: 0 0 15px #FFF;}
+}
+
+#taskbar{
+	height: 40px;
+	position: absolute;
+	right:0;left:0;bottom:0;
+	background: rgba(0,0,0,0.5);
+}
+	#taskbar>div{
+		position: absolute;
+		top:0;right:0;left:0;bottom:0;
+		background: rgba(0,0,0,0.05);
+	}
+	#taskbar .main{
+		position: absolute;
+		top:0; right:15px; bottom:0; left:0;
+	}
+		#taskbar .main>div{
+			position: absolute;
+			top:0;right:0;left:0;bottom:0;
+			border-top: 1px solid rgba(0,0,0,0.5);
+		}
+		#taskbar .main>div>div{
+			position: absolute;
+			top:0;right:0;left:0;bottom:0;
+			border-top: 1px solid rgba(255,255,255,0.5);
+		}
+	#taskbar .icons{
+		height: 38px;
+		padding-left: 10px;
+		background:
+			-webkit-gradient(linear, 0 0, 300 0,
+				color-stop(0.2, rgba(0,0,0,0.6)),
+				color-stop(0.35, rgba(0,0,0,0.0))
+			);
+	}
+		#taskbar .icons .start{
+			float: left;
+			width: 36px;
+			height: 36px;
+			-webkit-border-radius: 18pt;
+			-webkit-box-shadow: 0 0 5px #FFF;
+		}
+			#taskbar .icons .start:hover{
+				-webkit-animation-name: startButton;
+				-webkit-animation-duration: 0.5s;
+				-webkit-box-shadow: 0 0 15px #FFF;
+			}
+		#taskbar .icons ul{
+			float: left;
+			height: 38px;
+			margin-top: -2px;
+			margin-left: 12px;
+		}
+			#taskbar .icons li{
+				float: left;
+				height: 40px;
+				margin-right: 3px;
+			}
+				#taskbar .icons li:hover{
+					background: url('border.png') left center no-repeat,
+						url('border.png') right center no-repeat,
+						-webkit-gradient(radial, 50% 100%, 0, 50% 100%, 20,
+							color-stop(0.1, #FFF),
+							color-stop(1, rgba(0,0,0,0))
+						);
+				}
+				#taskbar .icons li div{
+					height: 40px;
+					padding: 4px 14px;
+				}
+			#taskbar .icons li.open,#taskbar .icons li.selected{
+				float: left;
+				height: 38px;
+				-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+				-webkit-border-radius: 2px;
+				border: 1px solid rgba(0,0,0,0.6);
+				background: rgba(255,255,255,0.2)
+					-webkit-gradient(linear, 0 0, 0 100%,
+						from(rgba(255,255,255,0.5)),
+						to(rgba(0,0,0,0))
+					);
+			}
+				#taskbar .icons li.open div,#taskbar .icons li.selected div{
+					height: 32px;
+					padding: 2px 12px;
+					-webkit-border-radius: 2px;
+					border: 1px solid rgba(255,255,255,0.6);
+				}
+			#taskbar .icons li.selected{
+				background: rgba(255,255,255,0.5)
+					-webkit-gradient(linear, 0 0, 0 100%,
+						from(rgba(255,255,255,0.7)),
+						to(rgba(0,0,0,0))
+					);
+			}
+				#taskbar .icons li.selected div{
+					border: 1px solid rgba(255,255,255,1);
+				}
+	#taskbar .tasks{
+		float: right;
+		height: 38px;
+		padding-left: 70px;
+		background:
+			-webkit-gradient(linear, 0 0, 100 0,
+				color-stop(0, rgba(0,0,0,0.0)),
+				color-stop(0.5, rgba(0,0,0,0.6))
+			);
+	}
+		#taskbar .tasks>div{
+			float: right;
+			height: 38px;
+			margin-right: 2px;
+			padding: 0 4px;
+		}
+			#taskbar .tasks>div:hover{
+				background: url('border.png') left center no-repeat,
+					url('border.png') right center no-repeat,
+					-webkit-gradient(radial, 50% 100%, 0, 50% 100%, 10,
+						color-stop(0.1, #FFF),
+						color-stop(1, rgba(0,0,0,0))
+					);
+			}
+		#taskbar .tasks img{
+			margin-top: 11px;
+			border: 0;
+		}
+		#taskbar .tasks .time{
+			padding: 1px 10px 1px 20px;
+			color: #FFF;
+			font-size: 10pt;
+			line-height: 18px;
+			text-shadow: 0 0 1px rgba(255,255,255,0.6);
+			letter-spacing: -1px;
+		}
+	#taskbar .desktop{
+		position: absolute;
+		top:0; right:0; bottom:0;
+		width: 13px;
+		border: 1px solid rgba(0,0,0,0.25);
+		background: rgba(0,0,0,0.25)
+			-webkit-gradient(linear, 0 0, 0 100%,
+				from(rgba(255,255,255,0.4)),
+				to(rgba(0,0,0,0.25))
+			);
+	}
+		#taskbar .desktop:hover{
+			background: rgba(255,255,255,0.4);
+		}
+		#taskbar .desktop>div{
+			position: absolute;
+			top:0;right:0;left:0;bottom:0;
+			border: 1px solid rgba(255,255,255,0.4);
+		}
+		</style>
+    </head>
+    <body>
+		<h1 style="font-size:32pt;margin:200px;text-shadow:0 0 2px #FFF;color:white;font-weight:normal">Taskbar color: <input style="-webkit-box-shadow:0 0 10px #FFF;-webkit-border-radius:2px;font-family:monospace;font-size:32pt;background:rgba(255,255,255,0.3);border:1px solid #FFF;color:#222" value="rgba(0,0,0,0.5)" onkeyup="document.getElementById('taskbar').style.background=this.value" /></h1>
+        <div id="taskbar">
+        	<div>
+	        	<div class="main">
+	        		<div><div>
+	        			<div class="tasks">
+							<div class="time">
+	        					<p>11:32 AM</p>
+								<p>5/22/2010</p>
+	        				</div>
+							<div>
+								<img style="height:16px;width:16px;" src="" alt="" /> 
+							</div>
+							<div>
+								<img style="height:16px;width:16px;" src="" alt="" /> 
+							</div>
+						</div>
+	        			<div class="icons">
+	        				<img class="start" src="start.png" alt="" />
+							<ul>
+								<li class="selected"><div><img src="chrome.png" alt="" /></div></li>
+								<li class="open"><div><img src="safari.png" alt="" /></div></li>
+								<li class=""><div><img src="firefox.png" alt="" /></div></li>
+							</ul>
+	        			</div>
+	        		</div></div>
+	        	</div>
+				<div class="desktop">
+					<div>
+						
+					</div>
+				</div>
+        	</div>
+        </div>
+    </body>
+</html>

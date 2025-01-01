@@ -1,0 +1,82 @@
+@font-face {
+	font-family: Segoe;
+	src: local("Segoe UI"),
+	url(segoeui.ttf);
+	font-weight: bold;
+}
+
+body,p,h1,h2,h3,ul,ol,li{
+	margin: 0;
+	padding: 0;
+	font-weight: inherit;
+	list-style-type: none;
+}
+
+body,html{
+	height: 100%;
+	overflow: hidden;
+}
+
+body{
+	background: #222;
+	color: #FFF;
+	font-family: Segoe;
+}
+
+a,a:visited{
+	color: inherit;
+	text-decoration: inherit;
+}
+
+#wrap{
+	width: 600px;
+	margin: 100px auto;
+	padding: 20px;
+	background: #000 url('TopBar.gif') top center no-repeat;
+	-khtml-box-shadow: 0 0 20px #000;
+}
+	#wrap.post{
+		margin: 30px auto;
+	}
+		#wrap.post p{
+			margin: 10px;
+		}
+		#wrap.post h1{
+			font-size: 36pt;
+		}
+		#wrap.post h1 span{
+			margin-left: 30px;
+			font-size: 18pt;
+			text-shadow: 0 0 2px #FFF;
+		}
+
+h1{
+	font-size: 52pt;
+	font-weight: bold;
+	text-shadow: 0 0 5px #FFF;
+	letter-spacing: -2px;
+}
+	h1 span{
+		font-size: 24pt;
+		font-weight: normal;
+	}
+
+#posts li{
+	float: left;
+	width: 178px; height: 178px;
+	margin: 10px;
+	border: 1px solid #666;
+	background: #111;
+	background-position: center center;
+}
+	#posts li a{
+		display: block;
+		width: 100%; height: 100%;
+	}
+	#posts li p{
+		margin-top: -25px;
+		padding: 5px 10px;
+		background: rgba(0, 0, 0, 0.8);
+		font-size: 10pt;
+		line-height: 15px;
+	}

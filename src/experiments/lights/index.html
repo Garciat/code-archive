@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Lights</title>
+		<style>
+body {
+	overflow: hidden;
+	margin: 0;
+	background: #000;
+	font-family: sans-serif;
+}
+
+#form {
+	margin: 100px auto;
+	width: 250px;
+	padding: 20px;
+	-webkit-box-shadow: 0 0 15px #E7D950;
+	-webkit-border-radius: 7px;
+	background: #E7D950;
+	text-shadow: 0 -1px rgba(255,255,255,0.5);
+	color: #222;
+	font-size: 14pt;
+}
+	#form p {
+		margin: 0;
+		padding: 0;
+		margin-top: 10px;
+		font-size: 8pt;
+	}
+	#form label {
+		display: block;
+		margin: 10px 0;
+	}
+	#form input {
+		float: right;
+		width: 80px;
+		-webkit-border-radius: 3px;
+		border: 1px solid rgba(0,0,0,0.7);
+	}
+
+img {
+	position: absolute;
+	top: 0; left: 0;
+}
+		</style>
+		<script src="jquery.js"></script>
+		<script src="svg.js"></script>
+		<script>
+xmlns = 'http://www.w3.org/2000/svg';
+
+$(function() {
+	$form = $('#form');
+	$lights = $('#lights');
+	$color = $('#color');
+	var update = true;
+	
+	var updateColor = function() {
+		var color = $color.attr('value');
+		$form.css({
+			background: color,
+			webkitBoxShadow: '0 0 15px '+color
+		});
+	}
+	
+	var parts = location.hash.substr(1,location.hash.length).split('-');
+	if(parts.length == 2)
+	{
+		$lights.attr('value', parts[0]);
+		$color.attr('value', '#'+parts[1]);
+		updateColor();
+		update = false;
+	}
+	
+	$color.keyup(updateColor);
+	
+	$(window).bind('resize', function() {
+		width = $(window).width();
+		height = $(window).height();
+		if (!update) return;
+		var n = Math.floor(width*height/3500);
+		$lights.attr('value', n);
+	}).trigger('resize');
+	
+	$('button').click(function() {
+		location.hash = $lights.attr('value')+'-'+$color.attr('value').substr(1,6);
+		draw(parseInt($lights.attr('value')));
+		$form.html('Drawing...');
+	});
+});
+
+function draw(n)
+{
+	var svg = new SVG(width, height);
+	
+	svg.rect(0, 0, width, height).attr({fill:'black'});
+	
+	var g1 = svg.group().attr({'enable-background':'new'});
+	
+	var color = $('#color').attr('value').substr(1,6);
+	color2 = [parseInt(color.substr(0, 2), 16), parseInt(color.substr(2, 2), 16), parseInt(color.substr(4, 2), 16)];
+	
+	var rGrad = svg.defs.linearGrad(0, {0:'rgba(0,0,0,0)', 30:'rgba('+color2.join(',')+',0.075)', 70:'rgba('+color2.join(',')+',0.075)', 100:'rgba(0,0,0,0)'});
+	var rBlur = svg.defs.blur(15);
+	for (var i=0; i<n; i++)
+	{
+		x = Math.floor(Math.random() * width);
+		y = Math.floor(Math.random() * height);
+		r = Math.floor(Math.random() * 20) + 3;
+		w = r * 2 - Math.log(r)*2;
+		h = r * 25;
+		opacity = (0.75*Math.random())+0.1;
+		blur = 1;
+		if (r > 14 && opacity<0.3)
+			blur = Math.floor(2 * Math.random());
+		blur = svg.defs.blur(blur);
+		g1.rect(x-w*0.5, y-h*0.5, w, h).fillFilter(rGrad).applyFilter(rBlur);
+		g1.circle(x, y, r).attr({fill:'#'+color, opacity:opacity}).applyFilter(blur);
+	}
+	
+	//var blend = svg.defs.blend('multiply');
+	//svg.rect(0, 0, width, height).attr({fill:'#'+color, opacity:0.8}).applyFilter(blend);
+	
+	var t = 150;
+	
+	svg.rect(0, 0, width, t).fillFilter(svg.defs.linearGrad(0, {0:'rgba(0,0,0,1)', 100:'rgba(0,0,0,0)'}));
+	svg.rect(0, height-t, width, t).fillFilter(svg.defs.linearGrad(0, {0:'rgba(0,0,0,0)', 100:'rgba(0,0,0,1)'}));
+	svg.rect(0, 0, t, height).fillFilter(svg.defs.linearGrad(90, {0:'rgba(0,0,0,1)', 100:'rgba(0,0,0,0)'}));
+	svg.rect(width-t, 0, t, height).fillFilter(svg.defs.linearGrad(90, {0:'rgba(0,0,0,0)', 100:'rgba(0,0,0,1)'}));
+	
+	var img = svg.toImage();
+	$('body').append(img);
+	$(img).css({opacity:0}).animate({opacity: 1});
+}
+		</script>
+	</head>
+	<body>
+		<div id="form">
+			<label>Number of lights: <input id="lights" /></label>
+			<label>Color (Hex): <input id="color" value="#E7D950" /></label>
+			<p><button>Draw</button> (Light colors recommended)</p>
+			<p>Enter full screen (F11) for bigger image. <a href="http://tjl.co/blog/graphics/focus-point/">Original.</a></p>
+		</div>
+	</body>
+</html>

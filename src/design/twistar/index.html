@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TwiStar Design</title>
+		<script src="jquery.js"></script>
+		<script>
+function centerWrap(){
+	var tmp = $('#wrap');
+	$('#wrap').css({
+		top: (tmp.parent().height()-tmp.height())/2,
+		left: (tmp.parent().width()-tmp.width())/2
+	});
+}
+
+$(function(){
+	centerWrap();
+	var tmp = $('#wrap');
+	$(window).bind('resize', function(){
+			centerWrap();
+			//$('#wrap').animate({width:tmp.parent().width(),height:tmp.parent().height(),top:0,left:0})
+	});
+	//$(window).resize()
+});
+		</script>
+		<style>
+body,ul,li,p,h1,h2,h3{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+html,body{
+	height: 100%;
+	
+}
+
+body{
+	background: #444;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#content a,#content a:visited{
+	border-bottom: 1px dotted #DCA436;
+	background: transparent;
+	color: #666;
+	text-decoration: none;
+}
+#content a:hover{
+	color: #FFF;
+	background: #DCA436;
+}
+
+#wrap{
+	overflow: hidden;
+	position: absolute;
+	min-width: 1024px;
+	min-height: 768px;
+	width: 1024px;
+	height: 768px;
+	-webkit-box-shadow: 0 0 30px #000;
+	background: #CCC;
+	background-image: -webkit-gradient(linear, 0 0, 0 150, from(#EEE), to(#CCC));
+}
+
+#side{
+	position: absolute;
+	top: 0; left: 0;
+	-webkit-box-shadow: 0 0 20px #888, inset -1px -1px 0 rgba(255,255,255,0.3);
+	background: #9acd32;
+}
+	#side h1{
+		padding: 35px 50px;
+		line-height: 60px;
+		color: #333;
+		text-shadow: 1px 1px 0 rgba(255,255,255,0.3), -1px -1px 0 rgba(0,0,0,0.3);
+		font-size: 62pt;
+		letter-spacing: -6px;
+	}
+		#side h1 span{
+			color: #FFF;
+		}
+	#side p{
+		position: absolute;
+		right: 0; bottom: 0;
+		padding: 2px 6px;
+		-webkit-box-shadow: inset -1px -1px 0 rgba(255,255,255,0.3);
+		background: #DCA436;
+		color: #FFF;
+		font-size: 14pt;
+		letter-spacing: -1px;
+	}
+
+#menu{
+	z-index: 1;
+	position: absolute;
+	top: 0; right: 0;
+}
+	#menu li{
+		position: relative;
+		float: left;
+	}
+	#menu li div{
+		padding: 50px 20px;
+	}
+	#menu li.alt{
+		
+	}
+	#menu li.alt a,#menu li.alt a:visited{
+		color: #444;
+	}
+	#menu a,#menu a:visited{
+		display: block;
+		padding: 10px;
+		line-height: 30px;
+		color: #AAA;
+		font-size: 24pt;
+		text-decoration: none;
+		letter-spacing: -2px;
+	}
+	#menu a:hover{
+		color: #888;
+	}
+	#menu span{
+		z-index: 3;
+		display: block;
+		position: absolute;
+		width: 100%;
+		height: 5px;
+	}
+	#menu .alt span{
+		height: 30px;
+	}
+	#menu .s1 span{background: #666}
+	#menu .s2 span{background: #DCA436}
+	#menu .s3 span{background: #333}
+	#menu .s4 span{background: #9acd32}
+
+#content{
+	overflow: hidden;
+	position: absolute;
+	top: 150px; bottom: 20px; right: 20px; left: 20px;
+	-webkit-box-shadow: 0 1px 0 #333, 0 0 20px #888;
+	background: #FFF;
+}
+
+.slide{
+	position: absolute;
+	top: 0; bottom: 0;
+	width: 100%;
+	-webkit-box-shadow: 0 0 20px #000, inset 0 0 1px #FFF;
+}
+	.slide div{
+		float: right;
+		width: 780px;
+		margin: 20px 30px;
+	}
+	#s1{
+		background: #666;
+	}
+		#s1 h1{
+			padding: 0 15px;
+			color: #AAA;
+			font-size: 32pt;
+			letter-spacing: -2px;
+		}
+		#s1 p{
+			margin: 10px 0;
+		}
+	#s2{
+		left: -850px;
+		background: #DCA436;
+	}
+	#s3{
+		left: -890px;
+		background: #333;
+	}
+	#s4{
+		left: -920px;
+		background: #9acd32;
+	}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="side">
+				<h1>Twi<span>Star</span></h1>
+				<p>Smart design.</p>
+			</div>
+			<ul id="menu">
+				<li class="s1 alt"><span></span><div><a href="#">Home</a></div></li>
+				<li class="s2"><span></span><div><a href="#">About</a></div></li>
+				<li class="s3"><span></span><div><a href="#">Portfolio</a></div></li>
+				<li class="s4"><span></span><div><a href="#">Contact Us</a></div></li>
+			</ul>
+			<div id="content">
+				<div id="s1" class="slide"><div>
+					<h1>Who are we?</h1>
+					<p>Lol</p>
+				</div></div>
+				<div id="s2" class="slide"><div>
+					
+				</div></div>
+				<div id="s3" class="slide"><div>
+					
+				</div></div>
+				<div id="s4" class="slide"><div>
+					
+				</div></div>
+			</div>
+		</div>
+	</body>
+</html>

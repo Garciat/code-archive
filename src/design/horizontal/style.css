@@ -1,0 +1,152 @@
+body,html{
+height: 100%;
+}
+
+body{
+background: #479 url('images/bkg.png') top center repeat-x;
+font-family: Arial, Helvetica, sans-serif;
+}
+
+body,ul,h1,h2,h3,p{
+margin: 0;
+padding: 0;
+font-weight: normal;
+}
+
+.c{clear: both;}
+
+#header{
+width: 755px;
+margin: 24px auto 0 auto;
+padding: 1px;
+border: 1px solid #222;
+background: #FFF;
+}
+#header div{
+background: #479 url('images/header.png') top center repeat-x;
+padding: 18px;
+color: #fff;
+font-size: 42pt;
+font-weight: bold;
+letter-spacing: -4px;
+text-align: center;
+}
+
+#menu{
+background: #fff;
+line-height: 30px;
+}
+#menu div{
+width: 787px;
+margin: 0 auto;
+background: url('images/right.png') right center repeat-y;
+}
+#menu div div{
+width: auto;
+padding: 1px 16px;
+background: url('images/left.png') left center repeat-y;
+}
+#menu a,#menu a:visited{
+float: left;
+margin-left: -9px;
+padding-right: 14px;
+padding-left: 14px;
+background: transparent url('images/menu.gif') right center repeat-y;
+color: #999;
+font-size: 14pt;
+letter-spacing: -1px;
+text-decoration: none;
+}
+#menu a:hover{
+background: #DEDEDE url('images/menu2.gif') right center repeat-y;
+color: #666;
+}
+#menu a:hover span{
+float: left;
+margin-left: -16px;
+padding-left: 16px;
+background: #DEDEDE url('images/menu3.gif') left center repeat-y;
+cursor: pointer;
+}
+#menu a.first,#menu a.first:visited{
+margin: 0;
+}
+#menu a.first:hover span{
+background: none;
+}
+#menu a.selected,#menu a.selected:visited,#menu a.selected:hover{
+color: #000;
+}
+#menu .c{
+background: none;
+padding: 0;
+}
+
+#main{
+width: 755px;
+margin: 0 auto;
+padding: 1px;
+border: 1px solid #222;
+background: #FFF;
+}
+#main #inner{
+padding: 15px;
+background: #FFF url('images/main.png') top center repeat-x;
+}
+
+#sidebar,#content{
+float: left;
+}
+
+#sidebar{
+width: 210px;
+}
+#sidebar h2{
+padding-left: 5px;
+margin-bottom: 5px;
+color: #69B;
+font-size: 18pt;
+letter-spacing: -1px;
+}
+#sidebar #search{
+width: 181px;
+padding: 3px 3px 3px 24px;
+border: 1px solid #AAA;
+background: #FFF url('images/search.png') 8px center no-repeat;
+font-size: 12pt;
+}
+
+#content{
+width: 500px;
+margin-left: 15px;
+}
+
+#footer{
+width: 740px;
+margin: 0 auto;
+padding: 5px 0;
+color: #DDD;
+font-size: 10pt;
+text-align: right;
+}
+#footer a,#footer a:visited{
+color: #FFF;
+}
+
+.post{
+}
+.post h2{
+color: #69B;
+font-size: 20pt;
+letter-spacing: -1px;
+}
+.post small{
+margin-left: 10px;
+color: #666;
+font-size: 9pt;
+}
+.post p{
+margin: 10px 0;
+font-size: 11pt;
+line-height: 22px;
+}

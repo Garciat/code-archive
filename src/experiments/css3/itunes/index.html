@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>iTunes</title>
+		<style type="text/css">
+body,ul,li,h1,h2,p{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+*{
+	cursor: default;
+	-webkit-user-select: none;
+}
+
+input{
+	-webkit-user-select: text;
+	outline: none;
+}
+
+body{
+	background: url('bkg.jpg') bottom center no-repeat;
+	background-attachment: fixed;
+	color: #222;
+	font: 11px "Lucida Grande", "Lucida Sans Unicode", Arial;
+}
+
+#itunes{
+	width: 1100px; height: 650px;
+	position: absolute;
+	top: 50px; left: 50px;
+	-webkit-box-shadow: 0 0 15px #000;
+}
+	#itunes .header{
+		position: absolute; z-index: 1;
+		top: 0; right: 0; left: 0;
+		height: 70px;
+		-webkit-box-shadow: inset 0 0 1px #FFF, 0 1px 1px rgba(0,0,0,0.6); 
+		background: 
+			-webkit-gradient(
+				linear, 0 0, 0 100%,
+				color-stop(0, rgba(232,232,232,1)),
+				color-stop(1, #99909A)
+			);
+	}
+		#itunes .header .title{
+			position: absolute;
+			top: 0; right: 0; left: 0;
+			height: 20px;
+		}
+			#itunes .header .title ul{
+				position: absolute; z-index: 1;
+				top: 0; left: 0;
+				float: left;
+				padding: 3px;
+				font-size: 11px;
+				line-height: 8px;
+			}
+				#itunes .header .title ul li{
+					float: left;
+					height: 10px;
+					margin-right: 2px;
+					padding: 3px 4px;
+				}
+					#itunes .header .title ul li:hover{
+						background: #888;
+						color: #FFF;
+					}
+			#itunes .header .title h1{
+				position: absolute;
+				top: 0; right: 0; left: 0;
+				font-size: 14px;
+				line-height: 20px;
+				font-weight: normal;
+				text-shadow: 0 1px 0 #FFF;
+				text-align: center;
+			}
+			#itunes .header .title .controls{
+				position: absolute; z-index: 1;
+				top: 0; right: 5px;
+				height: 17px;
+				-webkit-border-radius: 3px;
+			}
+				#itunes .header .title .controls>div{
+					float: left;
+				}
+				#itunes .header .title .controls .down:hover,#itunes .header .title .controls .window:hover{
+					background-image:
+						-webkit-gradient(
+							linear, 0 0, 0 100%,
+							color-stop(0.5, rgba(255,255,255,0.4)),
+							color-stop(0.5, rgba(255,255,255,0))
+						),
+						-webkit-gradient(
+							radial, 50% 50%, 0, 50% 50%, 20,
+							color-stop(0, #29aedd),
+							color-stop(1, #3695d8)
+						);
+				}
+					#itunes .header .title .controls .window:hover>div>div{
+						background: #3695d8;
+					}
+				#itunes .header .title .controls .close:hover{
+					background-image:
+						-webkit-gradient(
+							linear, 0 0, 0 100%,
+							color-stop(0.5, rgba(255,255,255,0.4)),
+							color-stop(0.5, rgba(255,255,255,0))
+						),
+						-webkit-gradient(
+							radial, 50% 50%, 0, 50% 50%, 20,
+							color-stop(0, #d95b19),
+							color-stop(1, #cf2c0d)
+						);
+				}
+				#itunes .header .title .controls .down{
+					width: 24px; height: 15px;
+					-webkit-box-shadow: inset 0 0 2px #FFF, -1px 1px 0px rgba(255,255,255,0.6); 
+					-webkit-border-radius: 0 0 0 3px;
+					border: 1px solid #6A6C70;
+					border-top: 0;
+					background:
+						-webkit-gradient(
+							linear, 0 0, 0 100%,
+							color-stop(0.5, rgba(255,255,255,0.4)),
+							color-stop(0.5, rgba(255,255,255,0))
+						);
+				}
+					#itunes .header .title .controls .down>div{
+						width: 10px; height: 3px;
+						margin: 7px auto 0 auto;
+						-webkit-border-radius: 1px;
+						border: 1px solid #444;
+						background: rgba(255,255,255,0.7);
+					}
+					#itunes .header .title .controls .window{
+						width: 24px; height: 15px;
+						-webkit-box-shadow: inset 0 0 2px #FFF, 0 1px 0px rgba(255,255,255,0.6); 
+						border-bottom: 1px solid #6A6C70;
+						background:
+							-webkit-gradient(
+								linear, 0 0, 0 100%,
+								color-stop(0.5, rgba(255,255,255,0.4)),
+								color-stop(0.5, rgba(255,255,255,0))
+							);
+					}
+						#itunes .header .title .controls .window>div{
+							width: 10px; height: 8px;
+							margin: 3px auto 0 auto;
+							-webkit-border-radius: 1px;
+							border: 1px solid #444;
+							background: rgba(255,255,255,0.7);
+						}
+							#itunes .header .title .controls .window>div>div{
+								width: 4px; height: 2px;
+								margin: 2px auto 0 auto;
+								-webkit-border-radius: 1px;
+								border: 1px solid #444;
+								background: #EEE;
+							}
+					#itunes .header .title .controls .close{
+						width: 40px; height: 15px;
+						-webkit-box-shadow: inset 0 0 2px #FFF, 1px 1px 0px rgba(255,255,255,0.6); 
+						-webkit-border-radius: 0 0 3px 0;
+						border: 1px solid #6A6C70;
+						border-top: 0;
+						background: #b45041;
+						background-image:
+							-webkit-gradient(
+								linear, 0 0, 0 100%,
+								color-stop(0.5, rgba(255,255,255,0.4)),
+								color-stop(0.5, rgba(255,255,255,0))
+							),
+							-webkit-gradient(
+								radial, 50% 50%, 0, 50% 50%, 20,
+								color-stop(0, #d6543d),
+								color-stop(1, #b45041)
+							);
+					}
+		#itunes .header .ui{
+			position: absolute;
+			top: 20px; right: 0; bottom: 0; left: 0;
+			padding: 0 15px;
+		}
+			#itunes .header .ui>div{
+				float: left;
+				height: 50px;
+			}
+			#itunes .header .ui .controls{
+				width: 110px;
+				margin: 0 15px;
+			}
+				#itunes .header .ui .controls>div{
+					float: left;
+					-webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.6);
+					border: 1px solid #777;
+					background-image:
+						-webkit-gradient(
+							linear, 0 0, 0 100%,
+							color-stop(0, #FFF),
+							color-stop(1, #C8C8C8)
+						);
+				}
+					/*#itunes .header .ui .controls>div:active{
+						-webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.8); Weird bug on chrome
+						background-image: none;
+					}*/
+				#itunes .header .ui .controls .back{
+					width: 30px; height: 30px;
+					margin-top: 8px;
+					-webkit-border-radius: 15px;
+				}
+					#itunes .header .ui .controls .back .l,#itunes .header .ui .controls .back .r{
+						float: left;
+					}
+					#itunes .header .ui .controls .back .l{
+						margin-left: 4px;
+					}
+					#itunes .header .ui .controls .back .a{
+						font-size: 0px; line-height: 0%; width: 0px;
+						margin: 10px 0 0 0;
+						border-top: 5px solid transparent;
+						border-right: 10px solid #555;
+					}
+					#itunes .header .ui .controls .back .b{
+						font-size: 0px; line-height: 0%; width: 0px;
+						margin: 0 0 0 0;
+						border-bottom: 5px solid transparent;
+						border-right: 10px solid #555;
+					}
+				#itunes .header .ui .controls .play{
+					width: 36px; height: 36px;
+					margin: 5px 3px;
+					-webkit-border-radius: 18px;
+				}
+					#itunes .header .ui .controls .play .a{
+						font-size: 0px; line-height: 0%; width: 0px;
+						margin: 10px 0 0 12px;
+						border-top: 8px solid transparent;
+						border-left: 15px solid #555;
+					}
+					#itunes .header .ui .controls .play .b{
+						font-size: 0px; line-height: 0%; width: 0px;
+						margin: 0 0 0 12px;
+						border-bottom: 8px solid transparent;
+						border-left: 15px solid #555;
+					}
+				#itunes .header .ui .controls .fwd{
+					width: 30px; height: 30px;
+					margin-top: 8px;
+					-webkit-border-radius: 15px;
+				}
+					#itunes .header .ui .controls .fwd .l,#itunes .header .ui .controls .fwd .r{
+						float: left;
+					}
+					#itunes .header .ui .controls .fwd .l{
+						margin-left: 6px;
+					}
+					#itunes .header .ui .controls .fwd .a{
+						font-size: 0px; line-height: 0%; width: 0px;
+						margin: 10px 0 0 0;
+						border-top: 5px solid transparent;
+						border-left: 10px solid #555;
+					}
+					#itunes .header .ui .controls .fwd .b{
+						font-size: 0px; line-height: 0%; width: 0px;
+						margin: 0 0 0 0;
+						border-bottom: 5px solid transparent;
+						border-left: 10px solid #555;
+					}
+			#itunes .header .ui .volume{
+				width: 110px;
+				margin: 0 15px;
+				background: url('vd.png') left center no-repeat,url('vu.png') right center no-repeat;
+			}
+				#itunes .header .ui .volume .bar{
+					width: 75px; height: 4px;
+					margin: 22px auto 0 auto;
+					-webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.6);
+					-webkit-border-radius: 2px;
+					border: 1px solid #777;
+					background: rgba(255,255,255,0.3);
+				}
+					#itunes .header .ui .volume .bar>div{
+						width: 8px; height: 8px;
+						position: relative;
+						top: -3px; left: -3px;
+						-webkit-box-shadow: 0 0 1px rgba(0,0,0,0.4);
+						-webkit-border-radius: 4px;
+						border: 1px solid #777;
+						background-image:
+							-webkit-gradient(
+								linear, 0 0, 0 100%,
+								color-stop(0, #EEE),
+								color-stop(1, #AAA)
+							);
+					}
+			#itunes .header .ui .panel{
+				width: 460px; height: 42px;
+				margin: 0 25px;
+				-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.6);
+				-webkit-border-radius: 5px;
+				border: 1px solid #777;
+				background: #ecf0d4;
+				background-image: url('apple.png'),
+					-webkit-gradient(
+						linear, 0 0, 0 100%,
+						color-stop(0.5, rgba(255,255,255,0.4)),
+						color-stop(0.5, rgba(255,255,255,0))
+					);
+				background-position: center center;
+				background-repeat: no-repeat;
+			}
+			#itunes .header .ui .view{
+				width: 75px; height: 20px;
+				margin: 10px 15px 0 15px;
+				-webkit-box-shadow: inset 0 0 3px rgba(255,255,255,0.4), 0 1px 0 rgba(255,255,255,0.6);
+				-webkit-border-radius: 3px;
+				border: 1px solid #777;
+				background-image:
+					-webkit-gradient(
+						linear, 0 0, 0 100%,
+						color-stop(0, #FFF),
+						color-stop(1, #C8C8C8)
+					);
+			}
+			#itunes .header .ui input{
+				width: 128px; height: 20px;
+				margin: 10px 0 0 15px;
+				padding: 0 0 0 20px;
+				-webkit-box-shadow: 0 1px 0 rgba(255,255,255,0.6);
+				-webkit-border-radius: 10px;
+				border: 1px solid #777;
+				background: #FFF url('search.png') 5px center no-repeat;
+				font-size: 11px;
+			}
+	#itunes .body{
+		position: absolute;
+		top: 70px; right: 0; bottom: 26px; left: 0;
+	}
+		#itunes .body .sidebar{
+			position: absolute;
+			top: 0; bottom: 0; left: 0;
+			width: 185px;
+			padding: 3px 0;
+			border-right: 1px solid #BBB;
+			background: #d9dee7;
+		}
+			#itunes .body .sidebar h2{
+				padding-left: 8px;
+				color: #627080;
+				font-size: 11px;
+				text-shadow: 0 1px 0 #FFF;
+				text-transform: uppercase;
+			}
+			#itunes .body .sidebar ul{
+				margin-bottom: 8px;
+			}
+				#itunes .body .sidebar ul li{
+					
+				}
+					#itunes .body .sidebar ul li>p{
+						padding: 3px 2px 3px 40px;
+					}
+					#itunes .body .sidebar ul li>span{
+						float: right;
+						margin-top: 2px;
+						margin-right: 2px;
+						padding: 0 5px;
+						-webkit-border-radius: 8px;
+						background: #99aac8;
+						color: #FFF;
+						text-shadow: 1px 0 0 #FFF;
+						line-height: 15px;
+					}
+						#itunes .body .sidebar ul li.selected>span{
+							background: #FFF;
+							color: #488acd;
+							text-shadow: 1px 0 0 #488acd;
+						}
+					#itunes .body .sidebar ul li.selected{
+						border-top: 1px solid #5594d2;
+						background-image:
+							-webkit-gradient(
+								linear, 0 1, 0 100%,
+								color-stop(0, #6fa6de),
+								color-stop(1, #1e6cbb)
+							);
+						color: #FFF;
+						text-shadow: 1px 0 0 #FFF;
+					}
+						#itunes .body .sidebar ul li.selected p{
+							padding-top: 2px;
+						}
+						#itunes .body .sidebar ul li.music p{
+							background: url('icons/music.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.movies p{
+							background: url('icons/movies.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.tv p{
+							background: url('icons/tv.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.podcasts p{
+							background: url('icons/podcasts.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.radio p{
+							background: url('icons/radio.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.store p{
+							background: url('icons/store.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.share p{
+							background: url('icons/share.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.dj p{
+							background: url('icons/dj.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.playlist p{
+							background: url('icons/playlist.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.selected.music p{
+							background: url('icons_b/music.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.selected.movies p{
+							background: url('icons_b/movies.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.selected.tv p{
+							background: url('icons_b/tv.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.selected.podcasts p{
+							background: url('icons_b/podcasts.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.selected.radio p{
+							background: url('icons_b/radio.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.selected.store p{
+							background: url('icons_b/store.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.selected.share p{
+							background: url('icons_b/share.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.selected.dj p{
+							background: url('icons_b/dj.png') 20px center no-repeat;
+						}
+						#itunes .body .sidebar ul li.selected.playlist p{
+							background: url('icons_b/playlist.png') 20px center no-repeat;
+						}
+		#itunes .body .content{
+			position: absolute;
+			top: 0; right: 0; bottom: 0; left: 186px;
+			background: #FFF;
+		}
+			#itunes .body .content .box{
+				margin: 40px 50px;
+				padding: 20px 30px;
+				-webkit-box-shadow: 0 1px 5px #CCC;
+				-webkit-border-radius: 10px;
+				border: 1px solid #DDD;
+			}
+				#itunes .body .content .box h1{
+					margin-bottom: 10px;
+					color: #515151;
+					font-size: 28pt;
+					font-weight: bold;
+				}
+				#itunes .body .content .box p{
+					margin-bottom: 10px;
+					color: #929292;
+					font-size: 14pt;
+				}
+	#itunes .footer{
+		position: absolute; z-index: 1;
+		right: 0; bottom: 0; left: 0;
+		height: 26px;
+		-webkit-box-shadow: inset 0 0 1px #FFF, 0 -1px 1px rgba(0,0,0,0.6); 
+		background: 
+			-webkit-gradient(
+				linear, 0 0, 0 100%,
+				color-stop(0, #DDD),
+				color-stop(1, #888)
+			);
+		line-height: 26px;
+		text-shadow: 0 1px 0 #FFF;
+		text-align: center;
+	}
+		</style>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript">
+$(function(){
+	$('#itunes .body .sidebar ul li').click(function(){
+		$('#itunes .body .sidebar ul li').removeClass('selected');
+		$(this).addClass('selected');
+	});
+});
+		</script>
+	</head>
+	<body>
+		<div id="itunes">
+			<div class="header">
+				<div class="title">
+					<ul>
+						<li>File</li>
+						<li>Edit</li>
+						<li>View</li>
+						<li>Controls</li>
+						<li>Store</li>
+						<li>Advanced</li>
+						<li>Help</li>
+					</ul>
+					<h1>iTunes</h1>
+					<div class="controls">
+						<div class="down"><div></div></div>
+						<div class="window"><div><div></div></div></div>
+						<div class="close"></div>
+					</div>
+				</div>
+				<div class="ui">
+					<div class="controls">
+						<div class="back">
+							<div class="l">
+								<div class="a"></div><div class="b"></div>
+							</div>
+							<div class="r">
+								<div class="a"></div><div class="b"></div>
+							</div>
+						</div>
+						<div class="play">
+							<div class="a"></div><div class="b"></div>
+						</div>
+						<div class="fwd">
+							<div class="l">
+								<div class="a"></div><div class="b"></div>
+							</div>
+							<div class="r">
+								<div class="a"></div><div class="b"></div>
+							</div>
+						</div>
+					</div>
+					<div class="volume">
+						<div class="bar"><div></div></div>
+					</div>
+					<div class="panel">
+						
+					</div>
+					<div class="view">
+						
+					</div>
+					<input placeholder="Search" />
+				</div>
+			</div>
+			<div class="body">
+				<div class="sidebar">
+					<h2>Library</h2>
+					<ul>
+						<li class="music selected"><p>Music</p></li>
+						<li class="movies"><p>Movies</p></li>
+						<li class="tv"><p>TV Shows</p></li>
+						<li class="podcasts"><span>34</span><p>Podcasts</p></li>
+						<li class="radio"><p>Radio</p></li>
+					</ul>
+					<h2>Store</h2>
+					<ul>
+						<li class="store"><p>iTunes Store</p></li>
+					</ul>
+					<h2>Shared</h2>
+					<ul>
+						<li class="share"><p>Home Sharing</p></li>
+					</ul>
+					<h2>Playlists</h2>
+					<ul>
+						<li class="dj"><p>iTunes DJ</p></li>
+						<li class="playlist"><p>My Top Rated</p></li>
+						<li class="playlist"><p>Recently Added</p></li>
+						<li class="playlist"><p>Top 25 Most Played</p></li>
+					</ul>
+				</div>
+				<div class="content">
+					<div class="box">
+						<h1>CSS3 iTunes</h1>
+						<p>Apart from a few icons, what you can see here was made entirely with HTML and CSS3.</p>
+						<p>This demo was styled to look like Windows' version of iTunes.</p>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<p>HTML and CSS by Gabriel Garcia. Design and basically everything &copy; Apple, Inc.</p>
+			</div>
+		</div>
+	</body>
+</html>

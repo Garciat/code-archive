@@ -1,0 +1,140 @@
+body,form,p,h1,h2,h3,ul,ol,li{
+margin: 0;
+padding: 0;
+font-weight: normal;
+list-style-type: none;
+}
+
+body{
+background: #87AABA url('http://www.prshnth.com/wp-content/themes/prshnth5.0/images/bg.png') repeat-x;
+background-attachment: fixed;
+font-family: "Nimbus Sans L",Helvetica,Arial,Verdana,sans-serif;
+font-size: 10pt;
+}
+
+a, a:visited{
+text-decoration: none;
+}
+
+.c{clear: both}
+
+#wrap{
+width: 807px;
+margin: 0 auto;
+}
+
+#header{
+line-height: 100px;
+color: rgba(0, 0, 0, 0.8);
+font-size: 62pt;
+font-weight: bold;
+text-align: center;
+letter-spacing: -8px;
+}
+
+#content{
+margin: 0 auto;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+/*border: 1px solid #FFF;
+background: #FFF url('content.png') repeat-x;*/
+}
+	#content p{margin: 5px 0}
+	
+	#main{
+	float: left;
+	width: 575px;
+	}
+		#main br{
+		line-height: 10px;
+		}
+		
+		#main .post{
+		/*background: #DDD;*/
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		color: #333;
+		}
+			#main .post h1{
+			margin-bottom: -20px;
+			padding: 2px 10px;
+			-moz-border-radius: 3px;
+			-webkit-border-radius: 3px;
+			/*border: 1px solid #0089D0;
+			background: #0089D0 url('post.png') top repeat-x;*/
+			color: rgba(0, 0, 0, 0.7);
+			font-size: 42pt;
+			letter-spacing: -1px;
+			}
+			
+			#main .post .text{
+			margin: 5px 0;
+			padding: 10px 12px;
+			-moz-border-radius: 3px;
+			-webkit-border-radius: 3px;
+			background: rgba(255, 255, 255, 0.4);
+			}
+				#main .post .text ul{
+				margin: 5px 0;
+				}
+				#main .post .text li{
+				margin-left: 20px;
+				padding: 2px 0;
+				list-style-type: disc;
+				}
+			
+			#main .post .meta{
+			padding: 3px 6px;
+			-moz-border-radius: 3px;
+			-webkit-border-radius: 3px;
+			background: rgba(0, 0, 0, 0.5);
+			color: rgba(255, 255, 255, 0.6);
+			font-size: 8pt;
+			}
+				#main .post .meta a, #main .post .meta a:visited{
+				padding: 1px 3px;
+				-moz-border-radius: 2px;
+				-webkit-border-radius: 2px;
+				background: rgba(0, 0, 0, 0.45);
+				color: rgba(255, 255, 255, 0.85);
+				}
+				#main .post .meta a:hover{
+				color: #FFF;
+				text-decoration: underline;
+				}
+	
+	#sidebar{
+	float: left;
+	width: 200px;
+	margin-left: 10px;
+	}
+		#sidebar br{
+		line-height: 10px;
+		}
+		
+		#sidebar .box{
+		padding: 10px;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		background: rgba(255, 255, 255, 0.65);
+		color: #555;
+		}
+			#sidebar .box h2{
+			color: #333;
+			font-size: 16pt;
+			letter-spacing: -1px;
+			}
+			#sidebar .box ul{
+			}
+
+
+#copyright{
+padding: 10px;
+color: rgba(0, 0, 0, 0.6);
+font-size: 8pt;
+text-align: center;
+}
+	#copyright a,#copyright a:visited{
+	color: rgba(0, 0, 0, 0.75);
+	font-weight: bold;
+	}

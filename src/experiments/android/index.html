@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<style>
+body,ul,li,p,h1,h2,h3{
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+body{
+	background: #555;
+}
+
+#screen{
+	overflow: hidden;
+	position: relative;
+	width: 550px; height: 550px;
+	margin: 20px auto;
+	-webkit-box-shadow: 0 0 20px #000;
+	background: #333;
+}
+	#screen #layer{
+		z-index: 1;
+		position: absolute;
+		top: 0; right: 0; bottom: 0; left: 0;
+		background: url('pixel.png') top left;
+	}
+	#screen #action{
+		z-index: 0;
+		position: absolute;
+		top: 0; right: 0; bottom: 0; left: 0;
+	}
+
+.line{
+	position: relative;
+	height: 330px;
+	width: 11px;
+}
+	.line div{
+		position: absolute;
+		bottom: 0;
+		width: 11px; height: 11px;
+	}
+	.line.n{
+		-webkit-transform: rotate(180deg);
+	}
+	.line.e{
+		-webkit-transform: rotate(270deg) translate(160px, 159px);
+	}
+	.line.s{
+		
+	}
+	.line.w{
+		-webkit-transform: rotate(90deg) translate(-160px, -159px);
+	}
+
+.line.red{
+	background: url('gradient-red.png') bottom center no-repeat;
+}
+	.line.red div{
+		-webkit-box-shadow: 0 0 25px #F00;
+		background: #F00;
+	}
+.line.green{
+	background: url('gradient-green.png') bottom center no-repeat;
+}
+	.line.green div{
+		-webkit-box-shadow: 0 0 25px #0F0;
+		background: #0F0;
+	}
+.line.blue{
+	background: url('gradient-blue.png') bottom center no-repeat;
+}
+	.line.blue div{
+		-webkit-box-shadow: 0 0 25px #00F;
+		background: #00F;
+	}
+.line.yellow{
+	background: url('gradient-yellow.png') bottom center no-repeat;
+}
+	.line.yellow div{
+		-webkit-box-shadow: 0 0 25px #FFCB00;
+		background: #FFCB00;
+	}
+		</style>
+		<script src="jquery.js"></script>
+		<script src="jquery.color.js"></script>
+		<script>
+var $screen;
+var $pixel;
+var rows;
+var cols;
+var duration = 5000;
+
+$(function(){
+	$screen = $('#screen');
+	cols = $screen.width()/11;
+	rows = $screen.height()/11;
+	
+	var colors = ['red','green','blue','yellow'];
+	
+	setInterval(function(){
+		addSlide(rand(1,cols), rows, 1, colors[rand(1,colors.length)-1]);
+		addSlide(0, rand(1,rows), 2, colors[rand(1,colors.length)-1]);
+		addSlide(rand(1,cols), 0, 3, colors[rand(1,colors.length)-1]);
+		addSlide(cols, rand(1,rows), 4, colors[rand(1,colors.length)-1]);
+	}, 1000);
+	
+	$('#screen').click(function(e){
+		var x = Math.ceil((e.pageX-$(this).offset().left)/11)-1;
+		var y = Math.ceil((e.pageY-$(this).offset().top)/11)-1;
+		
+		addSlide(x, y, 1, colors[rand(1,colors.length)-1]);
+		addSlide(x, y, 2, colors[rand(1,colors.length)-1]);
+		addSlide(x, y, 3, colors[rand(1,colors.length)-1]);
+		addSlide(x, y, 4, colors[rand(1,colors.length)-1]);
+	});
+});
+
+function randomSlide() {
+	switch(rand(1,4))
+	{
+		case 1:
+			addSlide(rand(1,cols), rows, 1, colors[rand(1,colors.length)-1]);
+		break;
+		case 2:
+			addSlide(0, rand(1,rows), 2, colors[rand(1,colors.length)-1]);
+		break;
+		case 3:
+			addSlide(rand(1,cols), 0, 3, colors[rand(1,colors.length)-1]);
+		break;
+		case 4:
+			addSlide(cols, rand(1,rows), 4, colors[rand(1,colors.length)-1]);
+		break;
+	}
+}
+
+function addSlide(x, y, dir, color) {
+	var name, css, animate, time, cont;
+	if(dir==1) {
+		name = 'n';
+		cont = {
+			width: 11,
+			height: rows*11,
+			top: (rows-y)*-11,
+			left: (x)*11
+		};
+		css = {top:cont.height};
+		animate = {top:-330};
+		time = duration;
+	}
+	else if(dir==2) {
+		name = 'e';
+		css = {left:-330};
+		cont = {
+			width: cols*11,
+			height: 11,
+			top: (y)*11,
+			left: (x)*11
+		};
+		animate = {left:cont.width};
+		time = duration;
+	}
+	else if(dir==3) {
+		name = 's';
+		css = {top:-330};
+		cont = {
+			width: 11,
+			height: rows*11,
+			top: (y)*11,
+			left: (x)*11
+		};
+		animate = {top:cont.height};
+		time = duration;
+	}
+	else if(dir==4) {
+		name = 'w';
+		cont = {
+			width: cols*11,
+			height: 11,
+			top: y*11,
+			left: (cols-x)*-11
+		};
+		css = {left:cont.width};
+		animate = {left:-330};
+		time = duration;
+	}
+	
+	var $cont = $('<div style="position:absolute;overflow:hidden;" />').css(cont);
+	var $line = $('<div class="line '+name+' '+color+'"><div></div></div>');
+	$cont.append($line).appendTo('#action');
+	
+	$line.css(css).animate(animate, time, function(){$(this).parent().remove()});
+}
+
+function rand(min, max) {
+	return (min+Math.floor(Math.random()*(max-min+1)));
+}
+		</script>
+	</head>
+	<body>
+		<div id="screen">
+			<div id="layer"></div>
+			<div id="action"></div>
+		</div>
+	</body>
+</html>

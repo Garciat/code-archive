@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Android 4 Home Slider V2</title>
+		
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		
+		<style>
+body, h1, h2, h3, p {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	overflow: hidden;
+	
+	background: #555;
+	
+	font-family: sans-serif;
+}
+
+#title {
+	position: absolute;
+	left: 0; top: 0;
+	
+	margin: 30px 50px;
+	
+	color: rgba(255, 255, 255, 0.8);
+	font-size: 4em;
+	letter-spacing: -3px;
+}
+
+#tip {
+	position: absolute;
+	left: 0; bottom: 0;
+	
+	margin: 30px;
+	padding: 20px;
+	
+	background: rgba(0, 0, 0, 0.8);
+	
+	color: #CCC;
+}
+
+.container {
+	position: absolute;
+	
+	border-radius: 100%;
+	border: 3px solid rgba(255, 255, 255, 0.3);
+	
+	-webkit-transform: scale(0.8);
+	-webkit-transition: 0.2s all;
+}
+	.container.active {
+		-webkit-transform: scale(1);
+	}
+	.container .logo {
+		cursor: default;
+		z-index: 1;
+		position: absolute;
+		top: 0; left: 50%;
+		
+		box-shadow: 0 1px 10px rgba(0, 0, 0, 0.8);
+		border-radius: 100%;
+		background: rgba(255, 255, 255, 0.95);
+		
+		color: #444;
+		font-size: 18px;
+		font-weight: bold;
+		text-align: center;
+	}
+		</style>
+		
+		<script>
+Math.TAU = 2 * Math.PI;
+
+function create_canvas(width, height) {
+	var canvas = document.createElement('canvas');
+	canvas.width = width;
+	canvas.height = height;
+	
+	return canvas;
+}
+
+function create_light_im(width, height) {
+	var canvas = create_canvas(width, height);
+	var ctx = canvas.getContext('2d');
+	
+	// halves
+	var hw = width/2;
+	var hh = height/2;
+	
+	ctx.translate(hw, hh);
+	
+	var grad = ctx.createRadialGradient(0, 0, 0, 0, 0, hw);
+	grad.addColorStop(0.2, 'rgba(255, 255, 255, 1)');
+	grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+	
+	ctx.fillStyle = grad;
+	ctx.fillRect(-hw, -hh, width, height);
+	
+	return canvas;
+}
+
+function create_balls_im(width, height) {
+	var canvas = create_canvas(width, height);
+	var ctx = canvas.getContext('2d');
+	
+	ctx.translate(width/2, height/2);
+	
+	// ring distance
+	var d = width/35;
+	// number of rings
+	var N = width / (d * 2);
+	// ball radius
+	var r = width/160;
+	// ball radius decrement
+	var dr = (r - 1.2) / N;
+	// balls per ring increment
+	var b = 7;
+	// ball coords
+	var balls = [];
+	
+	for (var i = 1; i < N; ++i) {
+		// ring radius
+		var R = 4 + d * i;
+		// number of balls
+		var n = 8 + b * (i - 1);
+		
+		for (var j = 0; j < n; ++j) {
+			var x = R * Math.sin(Math.TAU * j / n);
+			var y = R * Math.cos(Math.TAU * j / n);
+			
+			ctx.beginPath();
+			ctx.arc(x, y, r, 0, Math.TAU, false);
+			ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+			ctx.fill();
+		}
+		
+		r -= dr;
+	}
+	
+	return canvas;
+}
+
+function distance(x1, y1, x2, y2) {
+	var dx = x1 - x2;
+	var dy = y1 - y2;
+	
+	return Math.sqrt(dx * dx + dy * dy);
+}
+
+function create_container(x, y, w, h) {
+	var div = document.createElement('div');
+	div.classList.add('container');
+	div.style.width = w + 'px';
+	div.style.height = h + 'px';
+	div.style.left = (x - w/2) + 'px';
+	div.style.top = (y - h/2) + 'px';
+	
+	var LK = 4.5;
+	var logo = document.createElement('div');
+	logo.style.width = (w / LK) + 'px';
+	logo.style.height = (h / LK) + 'px';
+	logo.style.lineHeight = (w / LK) + 'px';
+	logo.style.marginLeft = (-w / LK /2) + 'px';
+	logo.style.marginTop = (-h / LK / 2) + 'px';
+	logo.classList.add('logo');
+	logo.innerText = 'Hello!';
+	div.appendChild(logo);
+	
+	return div;
+}
+
+function Slider(id, x, y, w, h) {
+	var k = this.k = 3;
+	
+	this.id = id;
+	this.x = x;
+	this.y = y;
+	this.w = w;
+	this.h = h;
+	this.lw = w/k;
+	this.lh = h/k;
+	this.cont = null;
+	this.canvas = null;
+	this.bg = null;
+	this.light = null;
+	
+	this.events = [];
+}
+
+Slider.prototype.addEvent = function(el, name, cb) {
+	this.events.push({
+		el: el,
+		name: name,
+		cb: cb
+	});
+	
+	el.addEventListener(name, cb);
+};
+
+Slider.prototype.removeEvents = function() {
+	this.events.forEach(function(event) {
+		event.el.removeEventListener(event.name, event.cb);
+	});
+};
+
+Slider.prototype.init = function() {
+	var cont = this.cont = create_container(this.x, this.y, this.w, this.h);
+	document.body.appendChild(this.cont);
+	
+	var canvas = this.canvas = create_canvas(this.lw, this.lh);
+	canvas.style.position = 'absolute';
+	canvas.style.left = (this.w - this.lw)/2 + 'px';
+	canvas.style.top = (this.h - this.lh)/2 + 'px';
+	cont.appendChild(canvas);
+	
+	this.bg = create_balls_im(this.w, this.h);
+	this.light = create_light_im(this.lw, this.lh);
+	
+	setTimeout(function() {
+		cont.classList.add('active');
+	}, 0);
+	
+	this.updatePosition(0, 0);
+	
+	var self = this;
+	
+	function processMove(ev) {
+		self.updatePosition(ev.pageX - self.x, ev.pageY - self.y);
+	}
+	
+	this.addEvent(window, 'mousemove', function(ev) {
+		ev.preventDefault();
+		
+		processMove(ev);
+		
+		return false;
+	});
+	
+	this.addEvent(window, 'mouseup', function(ev) {
+		ev.preventDefault();
+		
+		self.remove();
+		
+		return false;
+	});
+	
+	this.addEvent(window, 'touchmove', function(ev) {
+		ev.preventDefault();
+		
+		var mytouch;
+		var list = ev.changedTouches;
+		
+		for (var touch, i = 0; touch = list[i]; ++i) {
+			if (touch.identifier == self.id) {
+				mytouch = touch;
+				break;
+			}
+		}
+		
+		processMove(mytouch);
+		
+		return false;
+	});
+	
+	this.addEvent(window, 'touchend', function(ev) {
+		ev.preventDefault();
+			
+		var mytouch = null;
+		var list = ev.changedTouches;
+		
+		for (var touch, i = 0; touch = list[i]; ++i) {
+			if (touch.identifier == self.id) {
+				mytouch = touch;
+				break;
+			}
+		}
+		
+		if (mytouch !== null) {
+			self.remove();
+		}
+		
+		return false;
+	});
+};
+
+Slider.prototype.updatePosition = function(dx, dy) {
+	var X = this.x;
+	var Y = this.y;
+	var W = this.w;
+	var H = this.h;
+	var K = this.k;
+	var LW = this.lw;
+	var LH = this.lh;
+	var R = this.w/2;
+	
+	if (distance(dx, dy, 0, 0) > R) {
+		var r = Math.atan(dy/dx);
+		
+		if (dx < 0) {
+			r += Math.PI;
+		}
+		
+		dx = Math.floor(R * Math.cos(r));
+		dy = Math.floor(R * Math.sin(r));
+	}
+	
+	var ctx = this.canvas.getContext('2d');
+	ctx.clearRect(0, 0, LW, LH);
+	
+	var rx = (W - LW)/2 + dx;
+	var ry = (H - LH)/2 + dy;
+	var ox = 0;
+	var oy = 0;
+	
+	if (rx < 0) {
+		ox = -rx;
+		rx = 0;
+	}
+	
+	if (ry < 0) {
+		oy = -ry;
+		ry = 0;
+	}
+	
+	var brw = W/K + Math.min(0, W * (1 - 1/K) - rx);
+	var brh = H/K + Math.min(0, H * (1 - 1/K) - ry);
+	
+	ctx.globalCompositeOperation = 'source-over';
+	ctx.drawImage(this.bg, rx, ry, brw, brh, ox, oy, brw, brh);
+	
+	ctx.globalCompositeOperation = 'destination-in';
+	ctx.drawImage(this.light, 0, 0);
+	
+	this.canvas.style.webkitTransform = 'translate3D(' + dx +'px, ' + dy +'px, 0px)';
+};
+
+Slider.prototype.remove = function() {
+	this.removeEvents();
+	document.body.removeChild(this.cont);
+};
+
+var WIDTH = 400;
+var HEIGHT = 400;
+
+window.addEventListener('mousedown', function(ev) {
+	ev.preventDefault();
+	
+	new Slider(0, ev.pageX, ev.pageY, WIDTH, HEIGHT).init();
+	
+	return false;
+});
+
+window.addEventListener('touchstart', function(ev) {
+	ev.preventDefault();
+	
+	var list = ev.changedTouches;
+	
+	for (var touch, i = 0; touch = list[i]; ++i) {
+		new Slider(touch.identifier, touch.pageX, touch.pageY, WIDTH, HEIGHT).init();
+	}
+	
+	return false;
+});
+		</script>
+		
+		<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-19283098-4']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+		</script>
+	</head>
+	<body>
+		<h1 id="title">Android 4 Home Slider</h1>
+		<p id="tip"><strong>Protip:</strong> Click or (multi-)touch the page to start the slider!</p>
+	</body>
+</html>

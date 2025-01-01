@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Android 4 Home Slider V1</title>
+		
+		<style>
+body {
+	background: #555;
+}
+
+#container {
+	position: relative;
+	
+	margin: 200px auto;
+	
+	border-radius: 100%;
+	border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+#logo {
+	position: absolute;
+	top: 0; left: 50%;
+	
+	width: 80px;
+	height: 80px;
+	
+	margin-top: -40px;
+	margin-left: -40px;
+	
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+	border-radius: 100%;
+	background: white;
+}
+		</style>
+		
+		<script>
+function create_canvas(cont, width, height) {
+	var canvas = document.createElement('canvas');
+	canvas.width = width;
+	canvas.height = height;
+	
+	cont.appendChild(canvas);
+	
+	return canvas;
+}
+
+function distance(x1, y1, x2, y2) {
+	var dx = x1 - x2;
+	var dy = y1 - y2;
+	
+	return Math.sqrt(dx * dx + dy * dy);
+}
+
+var WIDTH = 400;
+var HEIGHT = 400;
+
+Math.TAU = 2 * Math.PI;
+
+function init() {
+	var cont = document.querySelector('#container');
+	cont.style.width = WIDTH + 'px';
+	cont.style.height = HEIGHT + 'px';
+	
+	var canvas = create_canvas(cont, WIDTH, HEIGHT);
+	
+	var ctx = canvas.getContext('2d');
+	
+	ctx.translate(WIDTH/2, HEIGHT/2);
+	
+	// ring distance
+	var d = 12;
+	// ball radius
+	var r = 2.5;
+	// ball radius decrement
+	var dr = 0.05;
+	// number of rings
+	var N = WIDTH / (d * 2);
+	// balls per ring increment
+	var b = 8;
+	// ball coords
+	var balls = [];
+	
+	for (var i = 1; i <= N; ++i) {
+		// ring radius
+		var R = d * i;
+		// number of balls
+		var n = b * i;
+		
+		for (var j = 0; j < n; ++j) {
+			balls.push({
+				x: R * Math.sin(Math.TAU * j / n),
+				y: R * Math.cos(Math.TAU * j / n),
+				r: r
+			});
+		}
+		
+		r -= dr;
+	}
+	
+	var mouse = {x: 0, y: 0};
+	
+	window.addEventListener('mousemove', function(ev) {
+		mouse.x = ev.x - cont.offsetLeft - WIDTH/2;
+		mouse.y = ev.y - cont.offsetTop - HEIGHT/2;
+	});
+	
+	function animation() {
+		ctx.clearRect(-WIDTH/2, -HEIGHT/2, WIDTH, HEIGHT);
+		
+		for (var i = 0, l = balls.length; i < l; ++i) {
+			var a = Math.max(0, 0.8 - 0.012 * distance(balls[i].x, balls[i].y, mouse.x, mouse.y));
+			
+			ctx.beginPath();
+			ctx.arc(balls[i].x, balls[i].y, balls[i].r, 0, Math.TAU, false);
+			ctx.fillStyle = 'rgba(255, 255, 255, ' + a + ')';
+			ctx.fill();
+		}
+		
+		webkitRequestAnimationFrame(animation);
+	}
+	
+	animation();
+}
+
+window.addEventListener('load', init);
+		</script>
+		
+		<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-19283098-4']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+		</script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="logo"></div>
+		</div>
+	</body>
+</html>
