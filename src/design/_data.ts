@@ -48,8 +48,4 @@ export const items = {
     "description":
       "Very simple assignment for computers class. Dreamweaver CS3.",
   },
-  "squares2/": {
-    "timestamp": "2015 08 04",
-    "description": "Squares v2!",
-  },
 };
